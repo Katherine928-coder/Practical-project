@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="ka" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GlutenFree.ge | ჩვენი ამბავი</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Georgian:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#fffbeb',
+                            100: '#fef3c7',
+                            200: '#fde68a',
+                            300: '#fcd34d',
+                            400: '#fbbf24',
+                            500: '#f59e0b',
+                            600: '#d97706',
+                            700: '#b45309',
+                            800: '#92400e',
+                            900: '#78350f',
+                        },
+                        eco: {
+                            50: '#ecfdf5',
+                            100: '#d1fae5',
+                            500: '#10b981',
+                            600: '#059669',
+                            700: '#047857',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Noto Sans Georgian', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Noto Sans Georgian', sans-serif;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #fffbeb;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #d97706;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="bg-amber-50/40 tt-gray-800 antialiased fl flex-col min-h-screen">
+
+    <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+    <header class="sticky top-0 z-40 glass-panel border-b border-amber-200/60 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                
+                <a href="#" class="flex items-center gap-3 group">
+                    <div class="w-11 h-11 bg-brand-500 rounded-2xl flex items-center justify-center text-white shadow-md shadow-brand-500/20 group-hover:scale-105 transition-transform">
+                        <i class="fa-solid fa-wheat-awn-circle-exclamation text-2xl"></i>
+                    </div>
+                    <div>
+                        <span class="text-xl font-extrabold text-amber-950 tracking-tight block">GlutenFree<span class="text-brand-600">.ge</span></span>
+                        <span class="text-[10px] uppercase font-bold tracking-widest text-eco-600 block -mt-1">100% უგლუტენო</span>
+                    </div>
+                </a>
+
+                <nav class="hidden md:flex items-center gap-8">
+                    <a href="#hero" class="text-amber-950 font-medium hover:text-brand-600 transition-colors">მთავარი</a>
+                    <a href="#about" class="text-amber-950 font-medium hover:text-brand-600 transition-colors">ვინ ვართ ჩვენ</a>
+                    <a href="#products" class="text-amber-950 font-medium hover:text-brand-600 transition-colors">პროდუქცია</a>
+                    <a href="#why-us" class="text-amber-950 font-medium hover:text-brand-600 transition-colors">რატომ უგლუტენო?</a>
+                    <a href="#reviews" class="text-amber-950 font-medium hover:text-brand-600 transition-colors">შეფასებები</a>
+                    <a href="#contact" class="text-amber-950 font-medium hover:text-brand-600 transition-colors">კონტაქტი</a>
+                </nav>
+
+                <div class="flex items-center gap-4">
+                    <button onclick="toggleCart()" class="relative p-3 bg-amber-100 hover:bg-amber-200/80 text-amber-900 rounded-2xl transition-all flex items-center justify-center group" aria-label="კალათა">
+                        <i class="fa-solid fa-basket-shopping text-xl group-hover:scale-110 transition-transform"></i>
+                        <span id="cart-badge" class="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold w-6 h-6 rounded-full flex items-center justify-center border-2 border-white shadow-sm transition-all scale-0">0</span>
+                    </button>
+
+                    <button onclick="toggleMobileMenu()" class="md:hidden p-3 text-amber-900 hover:bg-amber-100 rounded-2xl transition-colors" aria-label="მენიუ">
+                        <i class="fa-solid fa-bars text-xl" id="menu-icon"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="mobile-menu" class="hidden md:hidden bg-white/95 border-b border-amber-200 px-4 pt-2 pb-6 space-y-3 shadow-xl">
+            <a href="#hero" onclick="toggleMobileMenu()" class="block py-2.5 px-4 rounded-xl font-medium text-amber-900 hover:bg-amber-50">მთავარი</a>
+            <a href="#about" onclick="toggleMobileMenu()" class="block py-2.5 px-4 rounded-xl font-medium text-amber-900 hover:bg-amber-50">ვინ ვართ ჩვენ</a>
+            <a href="#products" onclick="toggleMobileMenu()" class="block py-2.5 px-4 rounded-xl font-medium text-amber-900 hover:bg-amber-50">პროდუქცია</a>
+            <a href="#why-us" onclick="toggleMobileMenu()" class="block py-2.5 px-4 rounded-xl font-medium text-amber-900 hover:bg-amber-50">რატომ უგლუტენო?</a>
+            <a href="#reviews" onclick="toggleMobileMenu()" class="block py-2.5 px-4 rounded-xl font-medium text-amber-900 hover:bg-amber-50">შეფასებები</a>
+            <a href="#contact" onclick="toggleMobileMenu()" class="block py-2.5 px-4 rounded-xl font-medium text-amber-900 hover:bg-amber-50">კონტაქტი</a>
+        </div>
+    </header>
+
+    <main class="flex-grow">
+
+        <section id="hero" class="relative py-12 lg:py-24 overflow-hidden">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                    
+                    <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+                        <div class="inline-flex items-center gap-2 px-4 py-2 bg-eco-100 border border-eco-500/20 rounded-full text-eco-700 text-sm font-semibold">
+                            <i class="fa-solid fa-shield-halved"></i> 100% გარანტირებული Gluten-Free სერტიფიკატი
+                        </div>
+                        
+                        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-amber-950 leading-tight">
+                            100% უგლუტენო, <br class="hidden sm:block"/>
+                            <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-600 to-amber-800">100% გემრიელი</span>
+                        </h1>
+                        
+                        <p class="text-lg sm:text-xl text-gray-700 max-w-2xl mx-auto lg:mx-0 font-normal leading-relaxed">
+                            ისიამოვნეთ ახლად გამომცხვარი არტიზანული პურით, ნაზი ნამცხვრებითა და დესერტებით ჯანმრთელობაზე ზრუნვით და კომპრომისების გარეშე.
+                        </p>
+
+                        <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-4">
+                            <a href="#products" class="w-full sm:w-auto px-8 py-4 bg-brand-500 hover:bg-brand-600 text-white font-bold rounded-2xl shadow-lg shadow-brand-500/30 hover:shadow-xl transition-all transform hover:-translate-y-0.5 text-center flex items-center justify-center gap-2">
+                                <i class="fa-solid fa-utensils"></i> ნახე პროდუქცია
+                            </a>
+                            <a href="#contact" class="w-full sm:w-auto px-8 py-4 bg-white border-2 border-amber-200 hover:border-brand-500 text-amber-950 font-bold rounded-2xl transition-all text-center hover:bg-amber-50">
+                                შეუკვეთე ახლავე
+                            </a>
+                        </div>
+
+                        <div class="pt-8 grid grid-cols-3 gap-4 border-t border-amber-200/80 max-w-lg mx-auto lg:mx-0 text-center">
+                            <div>
+                                <span class="block text-2xl font-bold text-amber-950">0%</span>
+                                <span class="text-xs text-gray-600 font-medium">გლუტენი</span>
+                            </div>
+                            <div>
+                                <span class="block text-2xl font-bold text-amber-950">100%</span>
+                                <span class="text-xs text-gray-600 font-medium">ბუნებრივი</span>
+                            </div>
+                            <div>
+                                <span class="block text-2xl font-bold text-amber-950">24/7</span>
+                                <span class="text-xs text-gray-600 font-medium">ონლაინ შეკვეთა</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="lg:col-span-5 relative">
+                        <div class="relative mx-auto max-w-md lg:max-w-none">
+                            <div class="absolute -inset-4 bg-gradient-to-r from-brand-300 to-eco-200 rounded-3xl blur-2xl opacity-50"></div>
+                            <div class="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-white">
+                                <img src="img/Glutenfree.jpg" 
+                                     alt="უგლუტენო პური და ცომეული" 
+                                     class="w-full h-[420px] object-cover hover:scale-105 transition-transform duration-700">
+                                <div class="absolute bottom-4 left-4 right-4 p-4 glass-panel rounded-2xl border border-white/50 flex items-center gap-4">
+                                    <div class="w-12 h-12 bg-eco-500 rounded-xl flex items-center justify-center text-white shrink-0 text-xl">
+                                        <i class="fa-solid fa-leaf"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold text-amber-950 text-sm">უსაფრთხო რეცეპტურა</h4>
+                                        <p class="text-xs text-gray-600">სპეციალური იზოლირებული საამქრო</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="py-16 bg-white border-y border-amber-200/50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                    
+                    <div class="lg:col-span-5 order-2 lg:order-1">
+                        <div class="relative">
+                            <div class="rounded-3xl overflow-hidden shadow-xl border-2 border-amber-100">
+                                <img src="img/1.jpg" 
+                                     alt="ჩვენი უგლუტენო საცხობი" 
+                                     class="w-full h-96 object-cover">
+                            </div>
+                            <div class="absolute -bottom-6 -right-6 bg-brand-500 text-white p-6 rounded-2xl shadow-lg hidden sm:block max-w-xs">
+                                <i class="fa-solid fa-award text-3xl mb-2"></i>
+                                <p class="font-bold text-sm">უმაღლესი ხარისხის ნატურალური ინგრედიენტები</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="lg:col-span-7 order-1 lg:order-2 space-y-6">
+                        <div>
+                            <span class="text-brand-600 font-extrabold uppercase text-xs tracking-wider bg-brand-50 px-3 py-1 rounded-full border border-brand-200">ჩვენს შესახებ</span>
+                            <h2 class="text-3xl sm:text-4xl font-extrabold text-amber-950 mt-3">ვინ ვართ ჩვენ?</h2>
+                        </div>
+
+                        <p class="text-lg text-gray-700 leading-relaxed font-normal">
+                            ჩვენი პროექტი შეიქმნა იმისათვის, რომ უგლუტენო კვება გავხადოთ ყველასათვის ხელმისაწვდომი, გემრიელი და მრავალფეროვანი. ჩვენ სპეციალიზებულნი ვართ <strong class="text-amber-900 font-semibold">100%-ით უგლუტენო (Gluten-Free)</strong> ცომეულისა და ტკბილეულის დამზადებაში, სადაც თითოეული ინგრედიენტი საგულდაგულოდ არის შერჩეული.
+                        </p>
+
+                        <div class="p-6 bg-amber-50/70 rounded-2xl border-l-4 border-brand-500 shadow-sm space-y-2">
+                            <h3 class="text-xl font-bold text-amber-950 flex items-center gap-2">
+                                <i class="fa-solid fa-bullseye text-brand-600"></i> ჩვენი მისია
+                            </h3>
+                            <p class="text-gray-700 leading-relaxed italic">
+                                "ჩვენი მისიაა შევთავაზოთ მომხმარებელს უსაფრთხო და მაღალი ხარისხის პროდუქცია, რომელიც არ ჩამოუვარდება ტრადიციულ ნაწარმს არც გემოთი და არც ტექსტურით."
+                            </p>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
+                            <div class="flex items-center gap-3 p-3 bg-amber-50 rounded-xl border border-amber-100">
+                                <i class="fa-solid fa-check-circle text-eco-600 text-lg"></i>
+                                <span class="text-xs font-bold text-gray-800">100% უგლუტენო</span>
+                            </div>
+                            <div class="flex items-center gap-3 p-3 bg-amber-50 rounded-xl border border-amber-100">
+                                <i class="fa-solid fa-seedling text-eco-600 text-lg"></i>
+                                <span class="text-xs font-bold text-gray-800">ნატურალური</span>
+                            </div>
+                            <div class="flex items-center gap-3 p-3 bg-amber-50 rounded-xl border border-amber-100">
+                                <i class="fa-solid fa-heart text-eco-600 text-lg"></i>
+                                <span class="text-xs font-bold text-gray-800">საუკეთესო გემო</span>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section id="products" class="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto mb-10 space-y-3">
+                <span class="text-brand-600 font-extrabold uppercase text-xs tracking-wider bg-brand-100 px-3 py-1 rounded-full">ონლაინ მაღაზია</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-amber-950">ჩვენი პროდუქცია</h2>
+                <p class="text-gray-600">აირჩიეთ ახლად გამომცხვარი, 100%-ით უსაფრთხო და გემრიელი პროდუქტები</p>
+            </div>
+
+            <div class="flex flex-wrap justify-center gap-2 sm:gap-4 mb-10">
+                <button onclick="filterProducts('all')" class="category-btn active border px-5 py-2.5 rounded-2xl text-sm font-bold transition-all bg-brand-500 text-white border-brand-500 shadow-md">
+                    ყველა
+                </button>
+                <button onclick="filterProducts('bakery')" class="category-btn border px-5 py-2.5 rounded-2xl text-sm font-bold transition-all bg-white text-gray-700 border-amber-200 hover:bg-amber-50">
+                    <i class="fa-solid fa-bread-slice mr-1"></i> ცომეული & პური
+                </button>
+                <button onclick="filterProducts('sweets')" class="category-btn border px-5 py-2.5 rounded-2xl text-sm font-bold transition-all bg-white text-gray-700 border-amber-200 hover:bg-amber-50">
+                    <i class="fa-solid fa-cake-candles mr-1"></i> ტკბილეული
+                </button>
+                <button onclick="filterProducts('snacks')" class="category-btn border px-5 py-2.5 rounded-2xl text-sm font-bold transition-all bg-white text-gray-700 border-amber-200 hover:bg-amber-50">
+                    <i class="fa-solid fa-cookie mr-1"></i> წასახემსებელი
+                </button>
+                <button onclick="filterProducts('ex')" class="category-btn border px-5 py-2.5 rounded-2xl text-sm font-bold transition-all bg-white text-gray-700 border-amber-200 hover:bg-amber-50">
+                    <i class="fa-solid fa-cookie mr-1"></i> განსხვავებული პროდუქცია
+                </button>
+            </div>
+
+            <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            </div>
+        </section>
+
+        <section id="why-us" class="py-16 bg-amber-100/50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-2xl mx-auto mb-12 space-y-3">
+                    <span class="text-eco-700 font-extrabold uppercase text-xs tracking-wider bg-eco-100 px-3 py-1 rounded-full">უპირატესობები</span>
+                    <h2 class="text-3xl sm:text-4xl font-extrabold text-amber-950">რატომ უგლუტენო?</h2>
+                    <p class="text-gray-600">უგლუტენო კვება არ არის მხოლოდ დიეტა — ეს არის ზრუნვა თქვენს ენერგიასა და ჯანმრთელობაზე.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    
+                    <div class="bg-white p-6 rounded-3xl border border-amber-200/80 shadow-sm hover:shadow-md transition-shadow">
+                        <div class="w-12 h-12 bg-red-100 text-red-600 rounded-2xl flex items-center justify-center text-xl mb-4 font-bold">
+                            <i class="fa-solid fa-shield-virus"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-amber-950 mb-2">ცელიაკიის დროს უსაფრთხო</h3>
+                        <p class="text-sm text-gray-600 leading-relaxed">ჩვენი პროდუქცია 100%-ით იზოლირებულია გლუტენის ჯვარედინი დაბინძურებისგან.</p>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-3xl border border-amber-200/80 shadow-sm hover:shadow-md transition-shadow">
+                        <div class="w-12 h-12 bg-eco-100 text-eco-600 rounded-2xl flex items-center justify-center text-xl mb-4 font-bold">
+                            <i class="fa-solid fa-feather-pointed"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-amber-950 mb-2">მსუბუქი მონელება</h3>
+                        <p class="text-sm text-gray-600 leading-relaxed">ამცირებს სიმძიმის შეგრძნებას და ხელს უწყობს საჭმლის მომნელებელი სისტემის ჯანსაღ ფუნქციონირებას.</p>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-3xl border border-amber-200/80 shadow-sm hover:shadow-md transition-shadow">
+                        <div class="w-12 h-12 bg-amber-100 text-amber-700 rounded-2xl flex items-center justify-center text-xl mb-4 font-bold">
+                            <i class="fa-solid fa-wheat-awn"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-amber-950 mb-2">ნატურალური ალტერნატივა</h3>
+                        <p class="text-sm text-gray-600 leading-relaxed">ვიყენებთ ნუში, ბრინჯის, წიწიბურასა და ტაპიოკას უმაღლესი ხარისხის ფქვილს.</p>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-3xl border border-amber-200/80 shadow-sm hover:shadow-md transition-shadow">
+                        <div class="w-12 h-12 bg-brand-100 text-brand-700 rounded-2xl flex items-center justify-center text-xl mb-4 font-bold">
+                            <i class="fa-solid fa-face-smile-beam"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-amber-950 mb-2">უნაკლო გემო</h3>
+                        <p class="text-sm text-gray-600 leading-relaxed">სპეციალური რეცეპტურით დამზადებული ნაწარმი არ ჩამოუვარდება ტრადიციულ გემოებს.</p>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section id="reviews" class="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto mb-12 space-y-3">
+                <span class="text-brand-600 font-extrabold uppercase text-xs tracking-wider bg-brand-100 px-3 py-1 rounded-full">შეფასებები</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-amber-950">რას ამბობენ მომხმარებლები?</h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                
+                <div class="bg-white p-6 rounded-3xl border border-amber-100 shadow-sm space-y-4">
+                    <div class="flex text-amber-400 gap-1 text-sm">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                    </div>
+                    <p class="text-gray-700 text-sm italic leading-relaxed">
+                        "ცელიაკიის დიაგნოზის შემდეგ მეგონა გემრიელ პურს ვეღარასდროს შევჭამდი. თქვენმა არტიზანულმა პურმა მოლოდინს გადააჭარბა!"
+                    </p>
+                    <div class="flex items-center gap-3 pt-2">
+                        <div class="w-10 h-10 bg-amber-200 rounded-full flex items-center justify-center font-bold text-amber-900">
+                            ნბ
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-sm text-amber-950">ნინო ბერიძე</h4>
+                            <span class="text-xs text-gray-500">ერთგული მომხმარებელი</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-3xl border border-amber-100 shadow-sm space-y-4">
+                    <div class="flex text-amber-400 gap-1 text-sm">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                    </div>
+                    <p class="text-gray-700 text-sm italic leading-relaxed">
+                        "შოკოლადის კექსი არის საოცრება! საერთოდ ვერ იგრძნობა, რომ უგლუტენოა. ძალიან მიხარია, რომ ასეთი ხარისხის საცხობი გვაქვს."
+                    </p>
+                    <div class="flex items-center gap-3 pt-2">
+                        <div class="w-10 h-10 bg-eco-200 rounded-full flex items-center justify-center font-bold text-eco-900">
+                            გქ
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-sm text-amber-950">გიორგი ქავთარაძე</h4>
+                            <span class="text-xs text-gray-500">თბილისი</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-3xl border border-amber-100 shadow-sm space-y-4">
+                    <div class="flex text-amber-400 gap-1 text-sm">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                    </div>
+                    <p class="text-gray-700 text-sm italic leading-relaxed">
+                        "სწრაფი მიტანის სერვისი და ყოველთვის ახალი, რბილი ცომეული. განსაკუთრებით ხაჭაპური და ორცხობილები გვიყვარს ოჯახში."
+                    </p>
+                    <div class="flex items-center gap-3 pt-2">
+                        <div class="w-10 h-10 bg-brand-200 rounded-full flex items-center justify-center font-bold text-brand-900">
+                            მგ
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-sm text-amber-950">მარიამ გეგეშიძე</h4>
+                            <span class="text-xs text-gray-500">ონლაინ მყიდველი</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <section id="contact" class="py-16 bg-white border-t border-amber-200/60">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+                    
+                    <div class="lg:col-span-5 space-y-6">
+                        <div>
+                            <span class="text-brand-600 font-extrabold uppercase text-xs tracking-wider bg-brand-50 px-3 py-1 rounded-full border border-brand-200">კონტაქტი</span>
+                            <h2 class="text-3xl font-extrabold text-amber-950 mt-3">დაგვიკავშირდით</h2>
+                            <p class="text-gray-600 mt-2">გაქვთ შეკითხვები ან გსურთ ინდივიდუალური შეკვეთის გაფორმება?</p>
+                        </div>
+
+                        <div class="space-y-4 pt-2">
+                            <div class="flex items-start gap-4 p-4 bg-amber-50/50 rounded-2xl border border-amber-100">
+                                <div class="w-10 h-10 bg-brand-500 text-white rounded-xl flex items-center justify-center shrink-0">
+                                    <i class="fa-solid fa-location-dot"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-amber-950 text-sm">მისამართი</h4>
+                                    <p class="text-sm text-gray-600">ქ. თბილისი, ი. ჭავჭავაძის გამზირი #34</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start gap-4 p-4 bg-amber-50/50 rounded-2xl border border-amber-100">
+                                <div class="w-10 h-10 bg-brand-500 text-white rounded-xl flex items-center justify-center shrink-0">
+                                    <i class="fa-solid fa-phone"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-amber-950 text-sm">ტელეფონი</h4>
+                                    <p class="text-sm text-gray-600">+995 (32) 2 123 456 / +995 599 00 11 22</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start gap-4 p-4 bg-amber-50/50 rounded-2xl border border-amber-100">
+                                <div class="w-10 h-10 bg-brand-500 text-white rounded-xl flex items-center justify-center shrink-0">
+                                    <i class="fa-solid fa-clock"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-amber-950 text-sm">სამუშაო საათები</h4>
+                                    <p class="text-sm text-gray-600">ორშაბათი - კვირა: 09:00 - 20:00</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="lg:col-span-7 bg-amber-50/40 p-8 rounded-3xl border border-amber-200/80 shadow-sm">
+                        <h3 class="text-xl font-bold text-amber-950 mb-6">მოგვწერეთ შეტყობინება</h3>
+                        <form onsubmit="handleContactSubmit(event)" class="space-y-4">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-xs font-bold text-gray-700 mb-1">სახელი, გვარი</label>
+                                    <input type="text" required placeholder="მაგ: გიორგი ბერიძე" class="w-full px-4 py-3 rounded-xl border border-amber-200 focus:outline-none focus:ring-2 focus:ring-brand-500 bg-white">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-bold text-gray-700 mb-1">ტელეფონი</label>
+                                    <input type="tel" required placeholder="599 XXXXXX" class="w-full px-4 py-3 rounded-xl border border-amber-200 focus:outline-none focus:ring-2 focus:ring-brand-500 bg-white">
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-gray-700 mb-1">შეტყობინება</label>
+                                <textarea rows="4" required placeholder="დაწერეთ თქვენი შეკითხვა..." class="w-full px-4 py-3 rounded-xl border border-amber-200 focus:outline-none focus:ring-2 focus:ring-brand-500 bg-white"></textarea>
+                            </div>
+                            <button type="submit" class="w-full py-3.5 bg-brand-500 hover:bg-brand-600 text-white font-bold rounded-xl shadow-md transition-all">
+                                გაგზავნა
+                            </button>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-amber-950 text-amber-100 py-12 border-t border-amber-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 pb-8 border-b border-amber-900">
+                
+                <div class="space-y-3">
+                    <div class="flex items-center gap-2 text-white font-extrabold text-lg">
+                        <i class="fa-solid fa-wheat-awn-circle-exclamation text-brand-500 text-2xl"></i> GlutenFree.ge
+                    </div>
+                    <p class="text-xs text-amber-200/70 leading-relaxed">
+                        100%-ით უგლუტენო ცომეული და ტკბილეული. ზრუნვა თქვენს ჯანმრთელობაზე ყოველდღიურად.
+                    </p>
+                </div>
+
+                <div>
+                    <h4 class="font-bold text-white text-sm mb-3">ნავიგაცია</h4>
+                    <ul class="space-y-2 text-xs text-amber-200/70">
+                        <li><a href="#hero" class="hover:text-white transition-colors">მთავარი</a></li>
+                        <li><a href="#about" class="hover:text-white transition-colors">ვინ ვართ ჩვენ</a></li>
+                        <li><a href="#products" class="hover:text-white transition-colors">პროდუქცია</a></li>
+                        <li><a href="#why-us" class="hover:text-white transition-colors">რატომ უგლუტენო?</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-bold text-white text-sm mb-3">სოციალური ქსელები</h4>
+                    <div class="flex gap-3">
+                        <a href="#" class="w-9 h-9 bg-amber-900/80 hover:bg-brand-500 rounded-xl flex items-center justify-center text-white transition-colors" aria-label="Facebook">
+                            <i class="fa-brands fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="w-9 h-9 bg-amber-900/80 hover:bg-brand-500 rounded-xl flex items-center justify-center text-white transition-colors" aria-label="Instagram">
+                            <i class="fa-brands fa-instagram"></i>
+                        </a>
+                        <a href="#" class="w-9 h-9 bg-amber-900/80 hover:bg-brand-500 rounded-xl flex items-center justify-center text-white transition-colors" aria-label="TikTok">
+                            <i class="fa-brands fa-tiktok"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 class="font-bold text-white text-sm mb-3">უსაფრთხოება</h4>
+                    <span class="inline-block px-3 py-1 bg-eco-900 text-eco-200 rounded-lg text-xs font-semibold border border-eco-700">
+                        <i class="fa-solid fa-shield-halved mr-1"></i> Gluten-Free Certified
+                    </span>
+                </div>
+
+            </div>
+
+            <div class="pt-6 text-center text-xs text-amber-300/50">
+                &copy; 2026 GlutenFree.ge — ყველა უფლება დაცულია.
+            </div>
+        </div>
+    </footer>
+
+    <div id="cart-drawer" class="fixed inset-0 z-50 overflow-hidden pointer-events-none transition-opacity duration-300 opacity-0">
+        <div onclick="toggleCart()" id="cart-backdrop" class="absolute inset-0 bg-black/50 backdrop-blur-sm transition-opacity"></div>
+
+        <div class="fixed inset-y-0 right-0 max-w-full flex pl-10">
+            <div id="cart-panel" class="w-screen max-w-md bg-white shadow-2xl flex flex-col pointer-events-auto transform translate-x-full transition-transform duration-300">
+                
+                <div class="p-6 bg-amber-50 border-b border-amber-200 flex items-center justify-between">
+                    <div class="flex items-center gap-2 text-amber-950 font-bold text-lg">
+                        <i class="fa-solid fa-basket-shopping text-brand-600"></i> კალათა
+                    </div>
+                    <button onclick="toggleCart()" class="p-2 text-gray-400 hover:text-gray-700 rounded-lg">
+                        <i class="fa-solid fa-xmark text-xl"></i>
+                    </button>
+                </div>
+
+                <div id="cart-items" class="flex-grow overflow-y-auto p-6 space-y-4">
+                </div>
+
+                <div class="p-6 bg-amber-50/50 border-t border-amber-200 space-y-4">
+                    <div class="flex justify-between items-center text-base font-bold text-amber-950">
+                        <span>სულ ჯამი:</span>
+                        <span id="cart-total-price">0.00 ₾</span>
+                    </div>
+                    <button onclick="openCheckoutModal()" class="w-full py-4 bg-brand-500 hover:bg-brand-600 text-white font-bold rounded-2xl shadow-lg transition-all text-center">
+                        შეკვეთის გაფორმება
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div id="checkout-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm hidden">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl border border-amber-100 space-y-4 relative">
+            <button onclick="closeCheckoutModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+            <h3 class="text-xl font-bold text-amber-950 flex items-center gap-2">
+                <i class="fa-solid fa-truck-fast text-brand-600"></i> შეკვეთის გაფორმება
+            </h3>
+            <p class="text-xs text-gray-500">შეიყვანეთ მონაცემები კურიერის მოსასვლელად</p>
+
+            <form onsubmit="processCheckout(event)" class="space-y-3 pt-2">
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 mb-1">სახელი და გვარი</label>
+                    <input type="text" required class="w-full px-3 py-2.5 rounded-xl border border-gray-200 text-sm focus:ring-2 focus:ring-brand-500 focus:outline-none">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 mb-1">ტელეფონის ნომერი</label>
+                    <input type="tel" required placeholder="5XX XX XX XX" class="w-full px-3 py-2.5 rounded-xl border border-gray-200 text-sm focus:ring-2 focus:ring-brand-500 focus:outline-none">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 mb-1">მიტანის მისამართი</label>
+                    <input type="text" required placeholder="ქუჩა, ბინის ნომერი" class="w-full px-3 py-2.5 rounded-xl border border-gray-200 text-sm focus:ring-2 focus:ring-brand-500 focus:outline-none">
+                </div>
+                <div class="pt-2">
+                    <button type="submit" class="w-full py-3.5 bg-eco-600 hover:bg-eco-700 text-white font-bold rounded-xl shadow-md transition-all">
+                        დადასტურება (<span id="checkout-total">0.00 ₾</span>)
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const products = [
+            {
+                id: 1,
+                name: "არტიზანული თეთრი პური",
+                category: "bakery",
+                price: 6.50,
+                image: "https://images.unsplash.com/photo-1586444248902-2f64eddc13df?q=80&w=600&auto=format&fit=crop",
+                desc: "100% უგლუტენო ბრინჯისა და ტაპიოკას ფქვილზე დამზადებული რბილი პური.",
+                tags: ["100% უგლუტენო", "ახალი"]
+            },
+            {
+                id: 2,
+                name: "რუხი წიწიბურას პური",
+                category: "bakery",
+                price: 7.20,
+                image: "https://images.unsplash.com/photo-1509440159596-0249088772ff?q=80&w=600&auto=format&fit=crop",
+                desc: "მწვანე წიწიბურასა და სელის თესლის სასარგებლო არტიზანული პური.",
+                tags: ["უგლუტენო", "უშაქრო"]
+            },
+            {
+                id: 3,
+                name: "შოკოლადის & ნუშის კექსი",
+                category: "sweets",
+                price: 8.50,
+                image: "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?q=80&w=600&auto=format&fit=crop",
+                desc: "ნუშის ფქვილითა და ბელგიური შოკოლადით გამომცხვარი ჰაეროვანი კექსი.",
+                tags: ["ნუშის ფქვილი", "ტკბილეული"]
+            },
+            {
+                id: 4,
+                name: "იმერული უგლუტენო ხაჭაპური",
+                category: "bakery",
+                price: 12.00,
+                image: "https://forbes.ge/wp-content/uploads/2023/09/4-2023-09-29T184646.203.jpg",
+                desc: "ტრადიციული გემო უგლუტენო ცომითა და ნამდვილი ქართული ყველით.",
+                tags: ["ცხელი", "პოპულარული"]
+            },
+            {
+                id: 5,
+                name: "ხილის & კენკრის ტარტი",
+                category: "sweets",
+                price: 9.00,
+                image: "https://images.unsplash.com/photo-1519869325930-281384150729?q=80&w=600&auto=format&fit=crop",
+                desc: "ნაზი კრემითა და ახალი კენკრით გაფორმებული ხრაშუნა ტარტი.",
+                tags: ["ახალი ხილი", "უგლუტენო"]
+            },
+            {
+                id: 6,
+                name: "შვრიის & თხილის ორცხობილა",
+                category: "snacks",
+                price: 5.50,
+                image: "https://images.unsplash.com/photo-1558961363-fa8fdf82db35?q=80&w=600&auto=format&fit=crop",
+                desc: "სპეციალური უგლუტენო შვრიისა და თხილის ჯანსაღი წასახემსებელი.",
+                tags: ["ენერგია", "ჯანსაღი"]
+            },
+              {
+                id: 6,
+                name: "ნუშის ორცხობილა",
+                category: "snacks",
+                price: 10.50,
+                image: "https://konditer.ge/cdn/shop/articles/hero-2-1-landscape-almond-cookies-piled-neatly-on-a-matte-white-plate-cracked-sugar-dusted-tops-slightly-golden-edges-one-cookie-broken-open-showing-soft-moist-interior-centered-compo.png?v=1772282165&width=1100",
+                desc: "სპეციალური უგლუტენო ნუშის ორცხობილა.",
+                tags: ["ენერგია", "ჯანსაღი"]
+            },
+            {
+                id: 7,
+                name: "ყველის ხრაშუნა ჩხირები",
+                category: "snacks",
+                price: 4.80,
+                image: "https://images.unsplash.com/photo-1541592106381-b31e9677c0e5?q=80&w=600&auto=format&fit=crop",
+                desc: "სუნელებითა და სულგუნით შეზავებული ხრაშუნა უგლუტენო სნეკი.",
+                tags: ["სნეკი", "უშაქრო"]
+            },
+            {
+                id: 8,
+                name: "ვანილის & ჟოლოს მაფინი",
+                category: "sweets",
+                price: 4.50,
+                image: "https://images.unsplash.com/photo-1587668178277-295251f900ce?q=80&w=600&auto=format&fit=crop",
+                desc: "ნაზი ვანილის ცომი ჟოლოს გულით.",
+                tags: ["დელიკატესი"]
+            },
+               {
+                id: 8,
+                name: "კატერინას რჩეული ტროპიკული ელექსირი",
+                category: "ex",
+                price: 20.00,
+                image: "https://raw.githubusercontent.com/Katherine928-coder/Practical-project/refs/heads/main/Exclusivetea.jpg",
+                desc: "კატერინას რჩეული ტროპიკული ელექსირი არ არის უბრალოდ ჩაი — ეს არის სამეფო ფუფუნებითა და განსაკუთრებული ზრუნვით შექმნილი ტროპიკული ელექსირი. იშვიათი ტროპიკული ყვავილების, ეგზოტიკური სანელებლებისა და ნატურალური ინგრედიენტების ეს უნიკალური ნაზავი შექმნილია მათთვის, ვინც აფასებს უმაღლეს ხარისხსა და გამორჩეულ ესთეტიკას.",
+                tags: ["დელიკატესი"]
+            },
+              {
+                id: 8,
+                name: "ხელნაკეთი უგლუტენო შოკოლადი",
+                category: "ex",
+                price: 18.00,
+                image: "https://raw.githubusercontent.com/Katherine928-coder/Practical-project/refs/heads/main/RoseChocolate.jpg",
+                desc: "ეს ექსკლუზიური ნაკრები შექმნილია მათთვის, ვისაც სურს დაუვიწყარი გახადოს ცხოვრების ყველაზე მნიშვნელოვანი და განსაკუთრებული დღეები.",
+                tags: ["დელიკატესი"]
+            },
+              {
+                id: 8,
+                name: "ექსკლუზიური გამოშვება",
+                category: "ex",
+                price: 30.00,
+                image: "https://raw.githubusercontent.com/Katherine928-coder/Practical-project/refs/heads/main/ExclusiveEdition.jpg",
+                desc: "ეს განსაკუთრებული კოლექცია შეიქმნა იმისთვის, რომ თქვენი მნიშვნელოვანი დღეები კიდევ უფრო ტკბილი, დახვეწილი და დაუვიწყარი გახადოს.",
+                tags: ["დელიკატესი"]
+            }
+        ];
+
+        let cart = [];
+
+        function renderProducts(items) {
+            const container = document.getElementById('product-grid');
+            container.innerHTML = '';
+
+            items.forEach(product => {
+                const card = document.createElement('div');
+                card.className = "bg-white rounded-3xl border border-amber-100 overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 flex flex-col group";
+                card.innerHTML = `
+                    <div class="relative h-48 overflow-hidden bg-amber-50">
+                        <img src="${product.image}" alt="${product.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <div class="absolute top-3 left-3 flex flex-wrap gap-1">
+                            ${product.tags.map(tag => `<span class="bg-white/90 backdrop-blur-md text-amber-950 font-bold text-[10px] px-2.5 py-1 rounded-full shadow-sm">${tag}</span>`).join('')}
+                        </div>
+                    </div>
+                    <div class="p-5 flex flex-col flex-grow justify-between space-y-3">
+                        <div>
+                            <h3 class="font-bold text-amber-950 text-base group-hover:text-brand-600 transition-colors">${product.name}</h3>
+                            <p class="text-xs text-gray-500 mt-1 line-clamp-2">${product.desc}</p>
+                        </div>
+                        <div class="flex items-center justify-between pt-2 border-t border-amber-50">
+                            <span class="text-lg font-extrabold text-amber-950">${product.price.toFixed(2)} ₾</span>
+                            <button onclick="addToCart(${product.id})" class="px-4 py-2 bg-amber-100 hover:bg-brand-500 hover:text-white text-amber-900 rounded-xl font-bold text-xs transition-all flex items-center gap-1.5">
+                                <i class="fa-solid fa-cart-plus"></i> დამატება
+                            </button>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function filterProducts(category) {
+            document.querySelectorAll('.category-btn').forEach(btn => {
+                btn.classList.remove('bg-brand-500', 'text-white', 'border-brand-500', 'shadow-md');
+                btn.classList.add('bg-white', 'text-gray-700', 'border-amber-200');
+            });
+            event.currentTarget.classList.remove('bg-white', 'text-gray-700', 'border-amber-200');
+            event.currentTarget.classList.add('bg-brand-500', 'text-white', 'border-brand-500', 'shadow-md');
+
+            if (category === 'all') {
+                renderProducts(products);
+            } else {
+                const filtered = products.filter(p => p.category === category);
+                renderProducts(filtered);
+            }
+        }
+
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            const existing = cart.find(item => item.id === productId);
+
+            if (existing) {
+                existing.quantity += 1;
+            } else {
+                cart.push({ ...product, quantity: 1 });
+            }
+
+            updateCartUI();
+            showToast(`"${product.name}" დაემატა კალათაში`);
+        }
+
+        function removeFromCart(productId) {
+            cart = cart.filter(item => item.id !== productId);
+            updateCartUI();
+        }
+
+        function changeQuantity(productId, delta) {
+            const item = cart.find(i => i.id === productId);
+            if (item) {
+                item.quantity += delta;
+                if (item.quantity <= 0) {
+                    removeFromCart(productId);
+                } else {
+                    updateCartUI();
+                }
+            }
+        }
+
+        function updateCartUI() {
+            const badge = document.getElementById('cart-badge');
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            
+            if (totalItems > 0) {
+                badge.innerText = totalItems;
+                badge.classList.remove('scale-0');
+            } else {
+                badge.classList.add('scale-0');
+            }
+
+            const container = document.getElementById('cart-items');
+            container.innerHTML = '';
+
+            if (cart.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-12 space-y-3">
+                        <i class="fa-solid fa-basket-shopping text-4xl text-amber-200"></i>
+                        <p class="text-gray-500 text-sm font-medium">თქვენი კალათა ცარიელია</p>
+                    </div>
+                `;
+            } else {
+                cart.forEach(item => {
+                    const el = document.createElement('div');
+                    el.className = "flex items-center gap-3 p-3 bg-amber-50/50 rounded-2xl border border-amber-100";
+                    el.innerHTML = `
+                        <img src="${item.image}" alt="${item.name}" class="w-14 h-14 object-cover rounded-xl">
+                        <div class="flex-grow">
+                            <h4 class="font-bold text-xs text-amber-950">${item.name}</h4>
+                            <span class="text-xs font-semibold text-brand-600">${item.price.toFixed(2)} ₾</span>
+                            <div class="flex items-center gap-2 mt-1">
+                                <button onclick="changeQuantity(${item.id}, -1)" class="w-5 h-5 bg-white rounded-md border border-amber-200 flex items-center justify-center text-xs font-bold text-gray-600 hover:bg-amber-100">-</button>
+                                <span class="text-xs font-bold">${item.quantity}</span>
+                                <button onclick="changeQuantity(${item.id}, 1)" class="w-5 h-5 bg-white rounded-md border border-amber-200 flex items-center justify-center text-xs font-bold text-gray-600 hover:bg-amber-100">+</button>
+                            </div>
+                        </div>
+                        <button onclick="removeFromCart(${item.id})" class="text-gray-400 hover:text-red-500 p-1">
+                            <i class="fa-solid fa-trash-can text-sm"></i>
+                        </button>
+                    `;
+                    container.appendChild(el);
+                });
+            }
+
+            const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            document.getElementById('cart-total-price').innerText = `${totalPrice.toFixed(2)} ₾`;
+            document.getElementById('checkout-total').innerText = `${totalPrice.toFixed(2)} ₾`;
+        }
+
+        function toggleCart() {
+            const drawer = document.getElementById('cart-drawer');
+            const panel = document.getElementById('cart-panel');
+            
+            if (drawer.classList.contains('pointer-events-none')) {
+                drawer.classList.remove('pointer-events-none', 'opacity-0');
+                panel.classList.remove('translate-x-full');
+            } else {
+                panel.classList.add('translate-x-full');
+                drawer.classList.add('opacity-0');
+                setTimeout(() => {
+                    drawer.classList.add('pointer-events-none');
+                }, 300);
+            }
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        function openCheckoutModal() {
+            if (cart.length === 0) {
+                showToast('კალათა ცარიელია!');
+                return;
+            }
+            toggleCart();
+            document.getElementById('checkout-modal').classList.remove('hidden');
+        }
+
+        function closeCheckoutModal() {
+            document.getElementById('checkout-modal').classList.add('hidden');
+        }
+
+        function processCheckout(e) {
+            e.preventDefault();
+            closeCheckoutModal();
+            cart = [];
+            updateCartUI();
+            showToast('გმადლობთ! შეკვეთა წარმატებით გაფორმდა.');
+        }
+
+        function handleContactSubmit(e) {
+            e.preventDefault();
+            e.target.reset();
+            showToast('შეტყობინება წარმატებით გაიგზავნა!');
+        }
+
+        function showToast(message) {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = "bg-amber-950 text-white text-xs font-semibold px-4 py-3 rounded-2xl shadow-xl flex items-center gap-2 pointer-events-auto transform transition-all duration-300 translate-y-2 opacity-0";
+            toast.innerHTML = `<i class="fa-solid fa-circle-check text-eco-500"></i> ${message}`;
+            
+            container.appendChild(toast);
+
+            setTimeout(() => {
+                toast.classList.remove('translate-y-2', 'opacity-0');
+            }, 10);
+
+            setTimeout(() => {
+                toast.classList.add('opacity-0', 'translate-y-2');
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        window.onload = function() {
+            renderProducts(products);
+        }
+    </script>
+</body>
+</html>
